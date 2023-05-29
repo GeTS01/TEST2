@@ -5,3 +5,7 @@ databaseChangeLog:
       file: db/changelog/2023/25-05-add-column.yaml
   - include:
       file: db/changelog/2023/27-05-change-data-type.yaml
+  - include:
+      file: db/changelog/2023/29-05-create-table-contents.yaml
+  - include:
+      file: db/changelog/2023/292-05-add-foreign-key.yaml

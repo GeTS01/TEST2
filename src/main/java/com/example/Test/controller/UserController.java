@@ -38,9 +38,4 @@ public class UserController {
     public Optional<User> update(@RequestBody UserUpdateDto userUpdateDto) {
         return userService.updateById(userUpdateDto);
     }
-
-    @GetMapping("/users")
-    public List<User> getUserByIds(Set<Long> ids){
-        return userService.getUserByIds(ids);
-    }
 }

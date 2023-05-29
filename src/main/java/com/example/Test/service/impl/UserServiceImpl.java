@@ -51,9 +51,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Optional<User> updateById(UserUpdateDto userUpdateDto) {
         Optional<User> optionalUser = userRepository.findById(userUpdateDto.getId());
-        if(optionalUser.isEmpty()){
+        if (optionalUser.isEmpty()) {
             log.error("User not found");
-            return null;
+            return Optional.empty();
+            //todo как правильно оформляьть исклюсения
         }
         var user = optionalUser.get();
         user.setId(userUpdateDto.getId());
@@ -66,7 +67,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUserByIds(Set<Long> ids) {
-        List<User> userList = userRepository.findByLongIds(ids);
-        return userList;
+        return userRepository.findByLongIds(ids)
+                .stream()
+                .toList();
     }
 }

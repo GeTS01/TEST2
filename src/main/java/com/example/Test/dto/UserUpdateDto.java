@@ -1,9 +1,6 @@
 package com.example.Test.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Setter
 @Getter
@@ -11,6 +8,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserUpdateDto {
     Long id;
+    @NonNull
     String name;
     String phoneNumber;
     int age;

@@ -8,17 +8,17 @@ import javax.persistence.Table;
 
 @Setter
 @Getter
-@Table(name = "users")
+@Table(name = "contents")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Content {
     @Id
     Long id;
-    @Column(name = "name", nullable = false)
+
+    @Column(name = "name")
     String name;
-    @Column(name = "phone_number")
-    String phoneNumber;
-    @Column(name = "age")
-    int age;
+
+    @Column(name = "user_id")
+    Long userId;
 }
