@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: init tables
+      context: ddl
+      author: Georgi
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: true
+                    primaryKey: true
+                    primaryKeyName: users_pkey
+              - column:
+                  name: name
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone_number
+                  type: integer
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

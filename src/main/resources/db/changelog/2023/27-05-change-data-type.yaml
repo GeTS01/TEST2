@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: change-data-type
+      context: ddl
+      author: Georgi
+      changes:
+        - modifyDataType:
+            columnName: phone_number
+            newDataType: varchar
+            schemaName: public
+            tableName: users
