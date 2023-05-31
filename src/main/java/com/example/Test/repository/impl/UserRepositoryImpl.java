@@ -55,6 +55,10 @@ public class UserRepositoryImpl implements UserRepository {
             where id = :id
             """;
 
+    private static final String CHECK_PHONE_NUMBER = """
+            select count(*) > 0 FROM users WHERE phone_number = :phoneNumber
+            """;
+
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
@@ -90,6 +94,14 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void delete(Long id) {
         namedParameterJdbcTemplate.update(DELETE_BY_ID, Map.of("id", id));
+    }
+
+    @Override
+    public boolean exist(String phoneNumber) {
+       return namedParameterJdbcTemplate.query(CHECK_PHONE_NUMBER, Map.of("phoneNumber", phoneNumber),
+               new BeanPropertyRowMapper<>(Boolean.class))
+               .stream()
+               .findFirst().isPresent();
     }
 
     private MapSqlParameterSource toParameterSource(User user) {

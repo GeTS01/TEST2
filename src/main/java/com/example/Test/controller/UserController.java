@@ -1,15 +1,17 @@
 package com.example.Test.controller;
 
 import com.example.Test.domain.User;
-import com.example.Test.dto.UserCreateDto;
+import com.example.Test.dto.request.RequestUser;
 import com.example.Test.dto.UserUpdateDto;
+import com.example.Test.dto.response.UserResponse;
 import com.example.Test.service.UserService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import javax.validation.Valid;
 import java.util.Optional;
-import java.util.Set;
 
+@Validated
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -20,12 +22,12 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@RequestBody UserCreateDto userDto) {
-        return userService.create(userDto);
+    public void create(@RequestBody @Valid RequestUser userDto) {
+        userService.create(userDto);
     }
 
     @GetMapping
-    public Optional<User> getById(Long id) {
+    public Optional<UserResponse> getById(Long id) {
         return userService.getById(id);
     }
 
@@ -35,7 +37,7 @@ public class UserController {
     }
 
     @PatchMapping
-    public Optional<User> update(@RequestBody UserUpdateDto userUpdateDto) {
+    public Optional<UserResponse> update(@RequestBody @Valid UserUpdateDto userUpdateDto) {
         return userService.updateById(userUpdateDto);
     }
 }

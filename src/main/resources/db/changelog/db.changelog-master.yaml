@@ -6,6 +6,4 @@ databaseChangeLog:
   - include:
       file: db/changelog/2023/27-05-change-data-type.yaml
   - include:
-      file: db/changelog/2023/29-05-create-table-contents.yaml
-  - include:
-      file: db/changelog/2023/292-05-add-foreign-key.yaml
+      file: db/changelog/2023/30-05-create-reaction-domain.yaml

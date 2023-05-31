@@ -1,20 +1,21 @@
 package com.example.Test.service.impl;
 
 import com.example.Test.domain.User;
-import com.example.Test.dto.UserCreateDto;
+import com.example.Test.dto.request.RequestUser;
 import com.example.Test.dto.UserUpdateDto;
+import com.example.Test.dto.response.UserResponse;
 import com.example.Test.repository.UserRepository;
 import com.example.Test.service.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -26,49 +27,54 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User create(UserCreateDto userDto) {
+    public void create(RequestUser userDto) {
         User user = User.builder()
                 .name(userDto.getName())
                 .phoneNumber(userDto.getPhoneNumber())
                 .age(userDto.getAge())
                 .build();
+        String userPhoneNumber = user.getPhoneNumber();
+        boolean check = userRepository.exist(userPhoneNumber);
+        if (!check) {
+
+        }
         userRepository.save(user);
-        return user;
+
     }
 
     @Override
-    public Optional<User> getById(Long id) {
-        return userRepository.findById(id);
+    public Optional<UserResponse> getById(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        var item = userRepository.findById(id).get();
+        return Optional.of(new UserResponse(item.getId(), item.getName(), item.getPhoneNumber(), item.getAge()));
     }
 
     @Override
     @Transactional
     public void deleteById(Long id) {
+        Optional<User> check = userRepository.findById(id);
+        if (check.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
         userRepository.delete(id);
     }
 
     @Override
     @Transactional
-    public Optional<User> updateById(UserUpdateDto userUpdateDto) {
+    public Optional<UserResponse> updateById(UserUpdateDto userUpdateDto) {
         Optional<User> optionalUser = userRepository.findById(userUpdateDto.getId());
-        if (optionalUser.isEmpty()) {
-            log.error("User not found");
-            return Optional.empty();
-            //todo как правильно оформляьть исклюсения
+            if (optionalUser.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND); //todo как правильно оформляьть исключения
         }
-        var user = optionalUser.get();
+        User user = optionalUser.get();
         user.setId(userUpdateDto.getId());
         user.setName(userUpdateDto.getName());
         user.setAge(userUpdateDto.getAge());
         user.setPhoneNumber(userUpdateDto.getPhoneNumber());
         userRepository.update(user);
-        return Optional.of(user);
-    }
-
-    @Override
-    public List<User> getUserByIds(Set<Long> ids) {
-        return userRepository.findByLongIds(ids)
-                .stream()
-                .toList();
+        return Optional.of(new UserResponse(user.getId(), user.getName(), user.getPhoneNumber(), user.getAge()));
     }
 }

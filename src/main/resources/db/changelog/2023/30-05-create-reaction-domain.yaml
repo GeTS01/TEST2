@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: create table reaction
+      context: ddl
+      author: Georgi
+      changes:
+        - createTable:
+            tableName: reaction
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: reaction_pkey
+              - column:
+                  name: reaction_type
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to_user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: from_user_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseColumnNames: to_user_id
+            baseTableName: reaction
+            constraintName: to_user_id
+            referencedColumnNames: id
+            referencedTableName: users
+        - addForeignKeyConstraint:
+            baseColumnNames: from_user_id
+            baseTableName: reaction
+            constraintName: from_user_id
+            referencedColumnNames: id
+            referencedTableName: users

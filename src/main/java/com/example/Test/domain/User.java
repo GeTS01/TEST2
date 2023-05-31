@@ -17,7 +17,7 @@ public class User {
     Long id;
     @Column(name = "name", nullable = false)
     String name;
-    @Column(name = "phone_number")
+    @Column(name = "phone_number", nullable = false, unique = true)
     String phoneNumber;
     @Column(name = "age")
     int age;

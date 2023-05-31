@@ -1,4 +1,4 @@
-package com.example.Test.dto;
+package com.example.Test.dto.request;
 
 import lombok.*;
 
@@ -7,11 +7,9 @@ import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
-public class UserUpdateDto {
-    Long id;
+public class RequestUser {
     @NotNull(message = "name must not be empty")
     @Size(min = 3, max = 20, message = "character limit")
-    @NotNull(message = "Поле с именем не должно быть пустым")
     String name;
     @NotNull(message = "phone number must not be empty")
     String phoneNumber;
