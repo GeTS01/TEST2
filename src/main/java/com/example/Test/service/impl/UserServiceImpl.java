@@ -1,7 +1,7 @@
 package com.example.Test.service.impl;
 
 import com.example.Test.domain.User;
-import com.example.Test.dto.request.RequestUser;
+import com.example.Test.dto.request.UserRequest;
 import com.example.Test.dto.UserUpdateDto;
 import com.example.Test.dto.response.UserResponse;
 import com.example.Test.repository.UserRepository;
@@ -27,17 +27,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void create(RequestUser userDto) {
+    public void create(UserRequest userDto) {
         User user = User.builder()
                 .name(userDto.getName())
                 .phoneNumber(userDto.getPhoneNumber())
                 .age(userDto.getAge())
                 .build();
         String userPhoneNumber = user.getPhoneNumber();
-        boolean check = userRepository.exist(userPhoneNumber);
-        if (!check) {
-
-        }
+//        boolean check = userRepository.exist(userPhoneNumber);
+//        if (!check) {
+//
+//        }
         userRepository.save(user);
 
     }

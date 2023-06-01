@@ -1,7 +1,6 @@
 package com.example.Test.controller;
 
-import com.example.Test.domain.User;
-import com.example.Test.dto.request.RequestUser;
+import com.example.Test.dto.request.UserRequest;
 import com.example.Test.dto.UserUpdateDto;
 import com.example.Test.dto.response.UserResponse;
 import com.example.Test.service.UserService;
@@ -22,7 +21,7 @@ public class UserController {
     }
 
     @PostMapping
-    public void create(@RequestBody @Valid RequestUser userDto) {
+    public void create(@RequestBody @Valid UserRequest userDto) {
         userService.create(userDto);
     }
 

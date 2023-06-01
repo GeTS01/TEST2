@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
-public class RequestUser {
+public class UserRequest {
     @NotNull(message = "name must not be empty")
     @Size(min = 3, max = 20, message = "character limit")
     String name;
