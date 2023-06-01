@@ -36,10 +36,8 @@ public class UserServiceImpl implements UserService {
         String userPhoneNumber = user.getPhoneNumber();
 //        boolean check = userRepository.exist(userPhoneNumber);
 //        if (!check) {
-//
 //        }
         userRepository.save(user);
-
     }
 
     @Override
