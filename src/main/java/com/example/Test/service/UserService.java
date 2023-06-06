@@ -1,9 +1,11 @@
 package com.example.Test.service;
 
+import com.example.Test.domain.User;
 import com.example.Test.dto.UserUpdateDto;
 import com.example.Test.dto.request.UserRequest;
 import com.example.Test.dto.response.UserResponse;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -11,4 +13,5 @@ public interface UserService {
     Optional<UserResponse> getById(Long id);
     void deleteById(Long id);
     Optional<UserResponse> updateById(UserUpdateDto userUpdateDto);
+    List<User> userList();
 }

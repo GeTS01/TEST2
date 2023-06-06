@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -74,5 +75,10 @@ public class UserServiceImpl implements UserService {
         user.setPhoneNumber(userUpdateDto.getPhoneNumber());
         userRepository.update(user);
         return Optional.of(new UserResponse(user.getId(), user.getName(), user.getPhoneNumber(), user.getAge()));
+    }
+
+    @Override
+    public List<User> userList() {
+        return userRepository.getListUser();
     }
 }

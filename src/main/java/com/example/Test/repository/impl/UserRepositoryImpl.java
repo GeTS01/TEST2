@@ -59,6 +59,16 @@ public class UserRepositoryImpl implements UserRepository {
             select count(*) > 0 FROM users WHERE phone_number = :phoneNumber
             """;
 
+    private static final String GET_LIST_USER = """
+            SELECT u.* FROM users u
+            LEFT JOIN
+            (SELECT to_user_id,
+            SUM (CASE WHEN reaction_type = 'LIKE' THEN 3 ELSE -1 END) AS total_points
+            FROM reaction
+            GROUP BY to_user_id) r ON u.id = r.to_user_id
+            ORDER BY COALESCE(r.total_points, 0) DESC;
+            """;
+
     NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Override
@@ -102,6 +112,11 @@ public class UserRepositoryImpl implements UserRepository {
                new BeanPropertyRowMapper<>(Boolean.class))
                .stream()
                .findFirst().isPresent();
+    }
+
+    @Override
+    public List<User> getListUser() {
+        return namedParameterJdbcTemplate.query(GET_LIST_USER, Map.of(), new BeanPropertyRowMapper<>(User.class));
     }
 
     private MapSqlParameterSource toParameterSource(User user) {

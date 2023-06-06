@@ -13,5 +13,6 @@ public interface UserRepository {
     List<User> findByLongIds(Set<Long> ids);
     void delete(Long id);
     boolean exist(String phoneNumber);
+    List<User> getListUser ();
 
 }

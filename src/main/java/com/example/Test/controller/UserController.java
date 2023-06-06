@@ -1,5 +1,6 @@
 package com.example.Test.controller;
 
+import com.example.Test.domain.User;
 import com.example.Test.dto.request.UserRequest;
 import com.example.Test.dto.UserUpdateDto;
 import com.example.Test.dto.response.UserResponse;
@@ -8,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Validated
@@ -19,6 +21,8 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
+
 
     @PostMapping
     public void create(@RequestBody @Valid UserRequest userDto) {
@@ -38,5 +42,10 @@ public class UserController {
     @PatchMapping
     public Optional<UserResponse> update(@RequestBody @Valid UserUpdateDto userUpdateDto) {
         return userService.updateById(userUpdateDto);
+    }
+
+    @GetMapping("List")
+    public List<User> getListUser(){
+        return userService.userList();
     }
 }
